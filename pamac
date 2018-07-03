@@ -1,15 +1,60 @@
 #!/bin/bash
+#
+# Type: Script Shell Installer
+# Description: Shell script for installing Pamac in Arch Linux.
+#
+# Supported Architecture: all
+# Release State: 1.0.0
+# Script Name: pamac
+# Project: https://github.com/williamcanin/pamac.git
+# Author: William C. Canin
+#   E-Mail: william.costa.canin@gmail.com
+#   Home page: http://williamcanin.me
 
-verify_git="$(pacman -Qs git | grep "local/git" | cut -d'/' -f2 | awk '{print $1}')"
+# License:
+# The MIT License (MIT)
 
-if [[ "$verify_git" != "git" ]]; then
-  sudo pacman -S git
-fi
+# Copyright (c) 2018 William C. Canin <william.costa.canin@gmail.com>
 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
 
-mkdir -p $HOME/.pamac
-git clone git@github.com:williamcanin/pamac.git $HOME/.pamac
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
 
-clean
-printf "\nFor install Pamac, execute command:\n"
-printf "bash \$HOME/.pamac/install"
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+# ******************************************************************************
+#
+
+function _verify_install_git(){
+  verify_git="$(pacman -Qs git | grep "local/git" | cut -d'/' -f2 | awk '{print $1}')"
+  if [[ "$verify_git" != "git" ]]; then
+    sudo pacman -S git
+    sudo -k
+  fi
+}
+
+function _download_pamac_installer(){
+  mkdir -p $HOME/.pamac
+  git clone git@github.com:williamcanin/pamac.git $HOME/.pamac
+}
+
+function _install_pamac(){
+  printf "\nFor install Pamac, execute command:\n"
+  printf "bash \$HOME/.pamac/install"
+}
+
+# start
+_verify_install_git
+_download_pamac_installer
+_install_pamac
