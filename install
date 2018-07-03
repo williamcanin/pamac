@@ -70,12 +70,11 @@ function _msg_error_() {
 # Welcome
 function _welcome_(){
 printf "\e[0;34m
-------------------------------------------
-Welcome to Pamac - © Copyright $(date +%Y)
-------------------------------------------
+----------------------------------------------------
+WWelcome to the Pamac installer - © Copyright $(date +%Y)
+----------------------------------------------------
 
-Note: To install \"Pamac \" your user must
-have sudo permission.
+Note: To install \"Pamac \" your user must have sudo permission.
 
 Wait ...
 
