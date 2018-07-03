@@ -60,7 +60,7 @@ permission.
 
 # Check user root
 function _verify_user(){
-  if [ "$(id -u)" != "0" ]; then
+  if [ "$(id -u)" == "0" ]; then
     _msg_error_ "You can not run this script with root user."
     exit 1
   fi  
@@ -76,25 +76,25 @@ function _checked_distribuition_(){
 }
 
 # Capture version to be installed
-function _capture_current_pamac(){
+function _capture_current_version_(){
   pkgver="$(curl -sL https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=${PACKAGENAME} | grep ^_pkgver | cut -d'=' -f2)"
   pkgrel="$(curl -sL https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=${PACKAGENAME} | grep ^pkgrel | cut -d'=' -f2)"
 }
 
-# Checks whether the Pamac is already installed. If installed,
+# Checks whether the package is already installed. If installed,
 # a question if you want to reinstall to the same version or not, will appear.
-function _check_pamac_installed_(){
-  _capture_current_pamac
-  checked_pamac="$(pacman -Qs ${PACKAGENAME} | grep ${PACKAGENAME} | cut -d'/' -f2 | awk '{print $1}')"
-  checked_pamac_version="$(pacman -Qs ${PACKAGENAME} | grep ${PACKAGENAME} | cut -d'/' -f2 | awk '{print $2}')"
-  if [[ "$checked_pamac" == "${PACKAGENAME}" ]]; then
-    _msg_warning_ "The ${APPNAME} is already installed on your machine with the version $checked_pamac_version."
-    if [[ "$checked_pamac_version" == "${pkgver}-${pkgrel}" ]]; then
-      msg_same_version1="You want to remove the $checked_pamac_version version and reinstall the same version (${pkgver}-${pkgrel})? (y/n)"
-      msg_same_version2="Removing version $checked_pamac_version and reinstalling the same ..."
+function _check_installed_(){
+  _capture_current_version_
+  checked_package="$(pacman -Qs ${PACKAGENAME} | grep ${PACKAGENAME} | cut -d'/' -f2 | awk '{print $1}')"
+  checked_package_version="$(pacman -Qs ${PACKAGENAME} | grep ${PACKAGENAME} | cut -d'/' -f2 | awk '{print $2}')"
+  if [[ "$checked_package" == "${PACKAGENAME}" ]]; then
+    _msg_warning_ "The ${APPNAME} is already installed on your machine with the version $checked_package_version."
+    if [[ "$checked_package_version" == "${pkgver}-${pkgrel}" ]]; then
+      msg_same_version1="You want to remove the $checked_package_version version and reinstall the same version (${pkgver}-${pkgrel})? (y/n)"
+      msg_same_version2="Removing version $checked_package_version and reinstalling the same ..."
     else
-      msg_same_version1="You want to remove the $checked_pamac_version version and install the version ${pkgver}-${pkgrel}? (y/n)"
-      msg_same_version2="Removing version $checked_pamac_version and install the version ${pkgver}-${pkgrel} ..."
+      msg_same_version1="You want to remove the $checked_package_version version and install the version ${pkgver}-${pkgrel}? (y/n)"
+      msg_same_version2="Removing version $checked_package_version and install the version ${pkgver}-${pkgrel} ..."
     fi
     _msg_header_ "$msg_same_version1" "\n"
     _msg_header_ "Reply:" ""
@@ -104,7 +104,7 @@ function _check_pamac_installed_(){
         _msg_header_ "$msg_same_version2" "\n"
         _msg_warning_ "[ Enter the password for sudo ]"
         sudo pacman -Rdd ${PACKAGENAME}
-        _msg_finish_ "${APPNAME} $checked_pamac_version removido com sucesso!"
+        _msg_finish_ "${APPNAME} $checked_package_version removido com sucesso!"
         _msg_header_ "Reinstalling ${APPNAME} version ${pkgver}-${pkgrel} ..." "\n"
         sudo -k
         reinstall="true"
@@ -117,7 +117,7 @@ function _check_pamac_installed_(){
   fi
 }
 
-# Asks if you want to install/reinstall Pamac
+# Asks if you want to install/reinstall.
 function _installation_question_(){
   if [[ "$reinstall" != "true" ]]; then
    _msg_header_ "You want to continue installing ${APPNAME}? (y/n)" "\n"
@@ -137,7 +137,7 @@ function _installation_question_(){
   esac
 }
 
-# Verify dependencies basis for Pamac be installed
+# Verify dependencies basis for be installed.
 function _checked_dependencies_(){
   base_devel=$(pacman -Qs base-devel | awk '{print $1}' | cut -d'/' -f1 | sed "2,100d")
   if [[ -z "$base_devel" ]]; then
@@ -150,7 +150,7 @@ function _checked_dependencies_(){
   fi
 }
 
-# Creates Pamac cache base for download and installation
+# Creates cache base for download and installation.
 function _create_basic_instalation_(){
   if [[ ! -d "$TEMP" ]]; then
     _msg_header_ "Creating basic of facility ..." "\n"
@@ -160,27 +160,27 @@ function _create_basic_instalation_(){
   cd $TEMP
 }
 
-# Download and install Pamac
+# Download and install package.
 function _download_install_packages_(){
-  # Donwload pamac-aur
+  # Donwload
   _msg_header_ "Download ${APPNAME} ..." "\n"
-  curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/pamac-aur.tar.gz
+  curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/${PACKAGENAME}.tar.gz
   _msg_finish_ "Download \"${APPNAME}\" terminated!"
 
-  # Install Pamac
+  # Install
   _msg_header_ "Decompressing \"${APPNAME} ...\"" "\n"
-  tar -xzf pamac-aur.tar.gz
+  tar -xzf ${PACKAGENAME}.tar.gz
   _msg_finish_ "${APPNAME} uncompressed!"
   if [[ "$reinstall" != "true" ]]; then
    _msg_header_ "Install \"${APPNAME} ...\"" "\n"
   fi
-  cd pamac-aur
+  cd ${PACKAGENAME}
   makepkg -si --noconfirm
   _msg_finish_ "\"${APPNAME}\" installed!"
   cd ~
 }
 
-# Clean the cache Pamac
+# Clean the cache installer.
 function _clean_unnecessary_(){
   _msg_header_ "Cleaning unnecessary things ..." "\n"
   rm -rf $TEMP
@@ -191,7 +191,7 @@ function _clean_unnecessary_(){
 _verify_user
 _checked_distribuition_
 _welcome_
-_check_pamac_installed_
+_check_installed_
 _installation_question_
 _checked_dependencies_
 _create_basic_instalation_
