@@ -3,9 +3,9 @@
 mkdir ~/.pamac-test
 cd ~/.pamac-test
 
-git clone git@github.com:williamcanin/pamac.git
+git clone git@github.com:williamcanin/pamac.git ~/.pamac-test
 
 sudo ln -s $HOME/.pamac-test/pamac/pamac /usr/local/bin/pamac-install
 sudo chmod +x /usr/local/bin/pamac-install
 
-pamac-install
+
