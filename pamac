@@ -37,7 +37,7 @@ function _msg_error_() {
 # Check user root
 function _verify_user(){
   if [ "$(id -u)" != "0" ]; then
-    _msg_error_ "You can not run this script with root user."
+    _msg_error_ "You can not run this script with root user.\n"
     exit 1
   fi  
 }
@@ -46,26 +46,26 @@ function _verify_user(){
 function _verify_install_git(){
   verify_git="$(pacman -Qs git | grep "local/git" | cut -d'/' -f2 | awk '{print $1}')"
   if [[ "$verify_git" != "git" ]]; then
-    _msg_header_ "Install Git..."
+    _msg_header_ "Install Git...\n"
     sudo pacman -S git
     sudo -k
-    _msg_finish_ "Done!"
+    _msg_finish_ "Done!\n"
   fi
 }
 
 # Function to download the Pamac installer.
 function _download_pamac_installer(){
-  _msg_header_ "Download installer for Pamac..."
+  _msg_header_ "Download installer for Pamac...\n"
   mkdir -p $HOME/.pamac
   git clone git@github.com:williamcanin/pamac.git $HOME/.pamac
-  _msg_finish_ "Done!"
+  _msg_finish_ "Done!\n"
   sleep 1
-  reset
+  clear
 }
 
 # Function to start the installation of the Pamac
 function _install_pamac(){
-  _msg_header_ "For install Pamac, run the command below:"
+  _msg_header_ "For install Pamac, run the command below:\n"
   _msg_warning_ "> bash \$HOME/.pamac/install"
 }
 
