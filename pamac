@@ -39,19 +39,24 @@
 function _verify_install_git(){
   verify_git="$(pacman -Qs git | grep "local/git" | cut -d'/' -f2 | awk '{print $1}')"
   if [[ "$verify_git" != "git" ]]; then
+    printf "\nInstall Git...\n"
     sudo pacman -S git
     sudo -k
+    printf "Done!\n"
   fi
 }
 
 function _download_pamac_installer(){
+  printf "\nDownload installer for Pamac...\n"
   mkdir -p $HOME/.pamac
   git clone git@github.com:williamcanin/pamac.git $HOME/.pamac
+  printf "Done!\n"
+  clear
 }
 
 function _install_pamac(){
-  printf "\nFor install Pamac, execute command:\n"
-  printf "bash \$HOME/.pamac/install"
+  printf "\nFor install Pamac, run the command below:\n\n"
+  printf "> bash \$HOME/.pamac/install\n\n"
 }
 
 # start
