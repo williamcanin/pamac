@@ -11,56 +11,67 @@
 #   E-Mail: william.costa.canin@gmail.com
 #   Home page: http://williamcanin.me
 
-# License:
-# The MIT License (MIT)
+# Utils
+function _msg_header_() {
+  printf "\e[0;36m→ %s\e[0m$2" "$1"
+}
 
-# Copyright (c) 2018 William C. Canin <william.costa.canin@gmail.com>
+function _msg_reply_() {
+  printf "\e[0;36m→ %s\e[0m$2" "$1"
+}
 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
+function _msg_finish_() {
+  printf "\e[0;32m✔ %s\e[0m\n" "$@"
+}
 
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
+function _msg_warning_() {
+  printf "\e[0;33m⚠ %s\e[0m\n" "$@"
+}
 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-# ******************************************************************************
+function _msg_error_() {
+  printf "\e[0;31m✖ %s\e[0m\n" "$@"
+}
+
+# Functions ----------------------------------
 #
+# Check user root
+function _verify_user(){
+  if [ "$(id -u)" != "0" ]; then
+    _msg_error_ "You can not run this script with root user."
+    exit 1
+  fi  
+}
 
+# Function to verify that Git is installed.
 function _verify_install_git(){
   verify_git="$(pacman -Qs git | grep "local/git" | cut -d'/' -f2 | awk '{print $1}')"
   if [[ "$verify_git" != "git" ]]; then
-    printf "\nInstall Git...\n"
+    _msg_header_ "Install Git..."
     sudo pacman -S git
     sudo -k
-    printf "Done!\n"
+    _msg_finish_ "Done!"
   fi
 }
 
+# Function to download the Pamac installer.
 function _download_pamac_installer(){
-  printf "\nDownload installer for Pamac...\n"
+  _msg_header_ "Download installer for Pamac..."
   mkdir -p $HOME/.pamac
   git clone git@github.com:williamcanin/pamac.git $HOME/.pamac
-  printf "Done!\n"
+  _msg_finish_ "Done!"
   sleep 1
   reset
 }
 
+# Function to start the installation of the Pamac
 function _install_pamac(){
-  printf "\nFor install Pamac, run the command below:\n\n"
-  printf "> bash \$HOME/.pamac/install\n\n"
+  _msg_header_ "For install Pamac, run the command below:"
+  _msg_warning_ "> bash \$HOME/.pamac/install"
 }
 
-# start
+# Starts the functions.
 _verify_install_git
 _download_pamac_installer
 _install_pamac
+#
+# -----------------------------------------------
