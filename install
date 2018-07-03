@@ -41,7 +41,7 @@
 # Begin ------------------------------------------------------------------------
 #
 # Variables
-TEMP="$HOME/.pamac-inst"
+TEMP="$HOME/.pamac"
 
 # Utils
 function _msg_header_() {
