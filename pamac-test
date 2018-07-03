@@ -1,4 +1,6 @@
 #!/bin/bash
 
-mkdir -p ~/.pamac-test
-git clone git@github.com:williamcanin/pamac.git ~/.pamac-test
+TEMPDIR="~/.pamac-test"
+
+mkdir -p $TEMPDIR
+git clone git@github.com:williamcanin/pamac.git $TEMPDIR
