@@ -51,7 +51,8 @@ function _download_pamac_installer(){
   mkdir -p $HOME/.pamac
   git clone git@github.com:williamcanin/pamac.git $HOME/.pamac
   printf "Done!\n"
-  clear
+  sleep 1
+  reset
 }
 
 function _install_pamac(){
