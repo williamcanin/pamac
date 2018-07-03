@@ -93,7 +93,7 @@ function _checked_distribuition_(){
 
 # Capture version to be installed
 function _capture_current_pamac(){
-  pkgver="$(curl -sL https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=pamac-aur | grep ^pkgver | cut -d'=' -f2)"
+  pkgver="$(curl -sL https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=pamac-aur | grep ^_pkgver | cut -d'=' -f2)"
   pkgrel="$(curl -sL https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=pamac-aur | grep ^pkgrel | cut -d'=' -f2)"
 }
 
