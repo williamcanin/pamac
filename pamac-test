@@ -1,7 +1,4 @@
 #!/bin/bash
 
-mkdir ~/.pamac-test
-cd ~/.pamac-test
-
+mkdir -p ~/.pamac-test
 git clone git@github.com:williamcanin/pamac.git ~/.pamac-test
-
