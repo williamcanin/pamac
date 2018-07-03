@@ -4,5 +4,5 @@ mkdir -p $HOME/.pamac
 git clone git@github.com:williamcanin/pamac.git $HOME/.pamac
 
 
-printf "For install Pamac, execute:\n"
-printf "bash $HOME/.pamac/install"
+printf "\nFor install Pamac, execute command:\n"
+printf "bash \$HOME/.pamac/install"
