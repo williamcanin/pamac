@@ -117,7 +117,7 @@ function _check_pamac_installed_(){
     case "$reply" in
       y|Y )
         _msg_header_ "$msg_same_version2" "\n"
-        sudo pacman -Rdd pamac
+        sudo pacman -Rdd pamac-aur
         _msg_finish_ "Pamac $checked_pamac_version removido com sucesso!"
         _msg_header_ "Reinstalling Pamac version ${pkgver}-${pkgrel} ..." "\n"
         sudo -k
