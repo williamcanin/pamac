@@ -1,7 +1,6 @@
 #!/bin/bash
 
-TEMPDIR="~/.pamac-aur"
+TEMPDIR="~/.pamac"
 
-mkdir -p $TEMPDIR
-cd $TEMPDIR
-git clone git@github.com:williamcanin/pamac.git $TEMPDIR
+mkdir -p "~/.pamac"
+git clone git@github.com:williamcanin/pamac.git "~/.pamac"
