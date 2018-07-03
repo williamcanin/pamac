@@ -1,5 +1,12 @@
 #!/bin/bash
 
+verify_git="$(pacman -Qs git | grep "local/git" | cut -d'/' -f2 | awk '{print $1}')"
+
+if [[ "$verify_git" != "git" ]]; then
+  sudo pacman -S git
+fi
+
+
 mkdir -p $HOME/.pamac
 git clone git@github.com:williamcanin/pamac.git $HOME/.pamac
 
