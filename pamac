@@ -3,4 +3,5 @@
 TEMPDIR="~/.pamac"
 
 mkdir -p $TEMPDIR
+cd $TEMPDIR
 git clone git@github.com:williamcanin/pamac.git $TEMPDIR
