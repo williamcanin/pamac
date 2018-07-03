@@ -4,3 +4,5 @@ mkdir ~/.pamac-test
 cd ~/.pamac-test
 
 git clone git@github.com:williamcanin/pamac.git
+
+bash pamac
