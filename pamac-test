@@ -5,7 +5,7 @@ cd ~/.pamac-test
 
 git clone git@github.com:williamcanin/pamac.git
 
-sudo ln -s $HOME/.pamac-test/pamac /usr/local/bin/pamac-install
+sudo ln -s $HOME/.pamac-test/pamac/pamac /usr/local/bin/pamac-install
 sudo chmod +x /usr/local/bin/pamac-install
 
 pamac-install
