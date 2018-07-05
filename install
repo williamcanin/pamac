@@ -45,18 +45,36 @@ function _msg_error_() {
 # Welcome
 function _welcome_(){
 printf "\e[0;34m
-----------------------------------------------------
-Welcome to the ${APPNAME} installer - © Copyright $(date +%Y)
-----------------------------------------------------
-
-Note: To install \"${APPNAME}\" your user must have sudo 
-permission.
-
-----------------------------------------------------
+ ---------------------------------------------------
+| Welcome to the ${APPNAME} installer - © Copyright $(date +%Y) |
+ ---------------------------------------------------
+|                                                   |
+| Note: To install \"${APPNAME}\" your user must have sudo | 
+| permission.                                       |
+|                                                   |
+ ----------------------------------------------------
 
 \e[0m"
+printf "Wait" 
+_wait_spinner "5"
 }
 
+# Spin function for messages in wait
+function _wait_spinner(){
+    sleep $1 &
+    PID=$!
+    i=1
+    sp="●◐◒◔◑◓●"
+    echo -n ' '
+    setterm -cursor off
+    printf ' '
+    while [ -d /proc/$PID ]
+    do
+        printf "\b${sp:i++%${#sp}:1}"
+    done
+    printf "\n"
+    setterm -cursor on
+}
 
 # Check user root
 function _verify_user(){
