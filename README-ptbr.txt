@@ -1,4 +1,4 @@
-Pamac Installer
+Pamac Installer V1.0
 
 [SOBRE]
 
