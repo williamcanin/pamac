@@ -58,7 +58,8 @@ function _verify_install_git(){
 function _download_pamac_installer(){
   _msg_header_ "Download installer for Pamac..." "\n"
   mkdir -p $HOME/.pamac
-  git clone git@github.com:williamcanin/pamac.git $HOME/.pamac
+  # git clone git@github.com:williamcanin/pamac.git $HOME/.pamac
+  git clone https://github.com/williamcanin/pamac.git $HOME/.pamac
   _msg_finish_ "Done!"
   sleep 1
   reset
